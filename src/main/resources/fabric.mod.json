@@ -1,6 +1,6 @@
 {
 	"schemaVersion": 1,
-	"id": "shield_animation",
+	"id": "mace-utils",
 	"version": "${version}",
 	"name": "shield_animation",
 	"description": "This is an example description! Tell everyone what your mod is about!",
@@ -15,7 +15,7 @@
 	"icon": "assets/shield_animation/icon.png",
 	"environment": "*",
 	"entrypoints": {
-		"main": [
+		"client": [
 			"nerd.amara.Shield_animation"
 		]
 	},
@@ -23,8 +23,8 @@
 		"shield_animation.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.17.2",
-		"minecraft": "~1.21.4",
+		"fabricloader": ">=0.16.1",
+		"minecraft": ">=1.21.1",
 		"java": ">=21",
 		"fabric-api": "*"
 	},
