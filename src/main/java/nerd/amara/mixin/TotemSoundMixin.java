@@ -1,6 +1,6 @@
 package nerd.amara.mixin;
 
-import nerd.amara.ConfigManager;
+import nerd.amara.ConfigManager_maceUtils;
 import nerd.amara.Shield_animation;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -12,17 +12,21 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static nerd.amara.Shield_animation.stunSlam;
+import static nerd.amara.Shield_animation.totem;
+
 @Mixin(ClientWorld.class)
 public class TotemSoundMixin {
-
     @Inject(method = "playSound(DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FFZJ)V", at = @At("HEAD"), cancellable = true)
     private void onPlaySound(double x, double y, double z, SoundEvent event, SoundCategory category, float volume, float pitch, boolean useDistance, long seed, CallbackInfo ci){
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
-        if (ConfigManager.totem) {
+        //if (totem){
+        if (ConfigManager_maceUtils.totem) {
             if (event.id().equals(SoundEvents.ITEM_TOTEM_USE.id()) && x == player.getX() && y == player.getY() && z == player.getZ()) {
                 System.out.println("Totem pop: " + String.valueOf(MinecraftClient.getInstance().world.getTime()));
                 for (int i = 0; i < Shield_animation.number_of_bells; i++) {
@@ -31,7 +35,8 @@ public class TotemSoundMixin {
                 }
             }
         }
-        if (ConfigManager.stunSlam) {
+        //if (stunSlam){
+            if (ConfigManager_maceUtils.stunSlam) {
             if (event.id().equals(SoundEvents.ITEM_MACE_SMASH_AIR.id()) || event.id().equals(SoundEvents.ITEM_MACE_SMASH_GROUND.id()) || event.id().equals(SoundEvents.ITEM_MACE_SMASH_GROUND_HEAVY.id())) {
                 player.sendMessage(Text.of(String.valueOf(MinecraftClient.getInstance().world.getTime() - Shield_animation.lastStun)), true);
             }

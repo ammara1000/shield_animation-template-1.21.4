@@ -1,6 +1,6 @@
 package nerd.amara.mixin;
 
-import nerd.amara.ConfigManager;
+import nerd.amara.ConfigManager_maceUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.gui.screen.Screen;
@@ -11,12 +11,16 @@ import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static nerd.amara.Shield_animation.toolbar;
+
 @Mixin(MinecraftClient.class)
-public class toolbarMixin {
+public abstract class toolbarMixin {
     private MinecraftClient client = MinecraftClient.getInstance();
     @Final
     @Shadow private GameOptions options;
@@ -24,7 +28,9 @@ public class toolbarMixin {
     @Shadow private Screen currentScreen;
     @Final
     @Shadow private InGameHud inGameHud;
-
+    @Invoker("doAttack")
+    public abstract boolean invokeDoAttack();
+    private long lastAttackTime = 0L;
 
 
     @Inject(
@@ -32,7 +38,15 @@ public class toolbarMixin {
             at = @At("HEAD")
     )
     private void onHandleInputEvents(CallbackInfo ci) {
-        if (ConfigManager.hotbar) {
+        /*if (this.options.attackKey.isPressed()) {
+            long now = System.currentTimeMillis();
+            if (now - lastAttackTime >= 50) {
+                this.invokeDoAttack();
+                lastAttackTime = now;
+            }
+        }*/
+        //if (toolbar){
+            if (ConfigManager_maceUtils.hotbar) {
             for (int i = 8; i >= 0; i--) {
                 boolean bl = this.options.saveToolbarActivatorKey.isPressed();
                 boolean bl2 = this.options.loadToolbarActivatorKey.isPressed();

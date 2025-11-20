@@ -23,10 +23,15 @@ public class Shield_animation implements ClientModInitializer {
     public static int number_of_bells = 10;
     public static SoundEvent totemSound = SoundEvents.BLOCK_BELL_USE;
 
+    public static boolean toolbar = true;
+    public static boolean worldBorder = true;
+    public static boolean totem = false;
+    public static boolean stunSlam = false;
+
 	@Override
 	public void onInitializeClient() {
-        ConfigManager.load();
-        ModCommand.register();
+        ConfigManager_maceUtils.load();
+        ModCommand_maceUtils.register();
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.

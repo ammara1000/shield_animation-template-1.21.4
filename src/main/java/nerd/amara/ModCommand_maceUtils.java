@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.*;
 
-public class ModCommand {
+public class ModCommand_maceUtils {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             dispatcher.register(
@@ -27,12 +27,13 @@ public class ModCommand {
 
     private static int set(String key, boolean value) {
         switch (key) {
-            case "stun_slam" -> ConfigManager.stunSlam = value;
-            case "world_border" -> ConfigManager.worldBorder = value;
-            case "totem" -> ConfigManager.totem = value;
-            case "hotbar" -> ConfigManager.hotbar = value;
+            case "stun_slam" -> ConfigManager_maceUtils.stunSlam = value;
+            case "world_border" -> ConfigManager_maceUtils.worldBorder = value;
+            case "totem" -> ConfigManager_maceUtils.totem = value;
+            case "hotbar" -> ConfigManager_maceUtils.hotbar = value;
         }
-        ConfigManager.save();
+        ConfigManager_maceUtils.save();
+        ConfigManager_maceUtils.sync();
         return 1;
     }
 }
